@@ -28,7 +28,7 @@ class ExceptionHandler extends Handle
             $this->errorCode = $e->errorCode;
         } else {
             if(config('app_debug')) {
-                parent::render($e);
+                return parent::render($e);
             } else {
                 $this->code = 500;
                 $this->msg = "服务器内部错误";
@@ -47,12 +47,16 @@ class ExceptionHandler extends Handle
         return json($result, $this->errorCode);
     }
 
-    private function recordErrorLog(Exception $e) {
-        LOG::init([
-            "type" => 'File',
-            "path" => LOG_PATH,
-            "level" => ['error']
+    /*
+     * 将异常写入日志
+     */
+    private function recordErrorLog(Exception $e)
+    {
+        Log::init([
+            'type'  =>  'File',
+            'path'  =>  LOG_PATH,
+            'level' => ['error']
         ]);
-        Log::record($e->getMessage(), 'error');
+        Log::record($e->getMessage(),'error');
     }
 }
