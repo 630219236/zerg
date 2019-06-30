@@ -7,5 +7,6 @@
  */
 
 return [
-    'img_prefix' => 'http://z.cn/imgaes'
+    'img_prefix' => 'http://z.cn/imgaes',
+    'token_expire_in' => 7200
 ];

@@ -15,6 +15,10 @@ use app\lib\exception\BannerMissException;
 
 class Banner
 {
+    /**
+     * @url: /banner/:id
+     * @params: $id
+     */
     public function getBanner($id) {
         (new IDMustBePositiveInt())->goCheck();
         $banner = BannerModel::getBannerById($id);

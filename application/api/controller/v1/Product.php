@@ -43,4 +43,20 @@ class Product
         $products = $products->hidden(['summary']);
         return $products;
     }
+
+    /**
+     * @url /product/:id
+     * @param $id
+     * @return array|false|\PDOStatement|string|\think\Model
+     * @throws ProductException
+     * @throws \app\lib\exception\ParameterException
+     */
+    public function getOne($id) {
+        (new IDMustBePositiveInt())->goCheck();
+        $product = ProductModel::getProductDetail($id);
+        if(!$product) {
+            throw new ProductException();
+        }
+        return $product;
+    }
 }
