@@ -10,6 +10,7 @@ namespace app\api\service;
 
 
 use app\api\model\User;
+use app\lib\enmu\ScopeEnmu;
 use app\lib\exception\TokenException;
 use app\lib\exception\WeChatException;
 use think\Exception;
@@ -80,7 +81,11 @@ class UserToken extends Token
         $cachedValue = $wxResult;
         $cachedValue['uid'] = $uid;
         // scope的值越大，权限越大
-        $cachedValue['scope'] = 16;
+        // scope：16代表客户
+//        $cachedValue['scope'] = 16;
+        $cachedValue['scope'] = ScopeEnmu::User;
+        // scope：32代表是CMS(管理员)
+
         return $cachedValue;
     }
 

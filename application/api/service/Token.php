@@ -9,6 +9,8 @@
 namespace app\api\service;
 
 
+use app\lib\enmu\ScopeEnmu;
+use app\lib\exception\ForbiddenException;
 use app\lib\exception\TokenException;
 use think\Cache;
 use think\Exception;
@@ -48,4 +50,32 @@ class Token
         return $uid;
     }
 
+
+    // 管理员和用户都能访问的权限
+    public static function needPrimaryScope() {
+        $scope = self::getCurrentTokenVar('scope');
+        if($scope) {
+            if ($scope >= ScopeEnmu::User) {
+                return true;
+            } else {
+                throw new ForbiddenException();
+            }
+        } else {
+            throw new TokenException();
+        }
+    }
+
+    // 只能用户访问的权限
+    public static function needExclusiveScope() {
+        $scope = self::getCurrentTokenVar('scope');
+        if($scope) {
+            if ($scope == ScopeEnmu::User) {
+                return true;
+            } else {
+                throw new ForbiddenException();
+            }
+        } else {
+            throw new TokenException();
+        }
+    }
 }
