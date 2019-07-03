@@ -7,6 +7,6 @@
  */
 
 return [
-    'img_prefix' => 'http://z.cn/imgaes',
+    'img_prefix' => 'https://www.webpig.top/images',
     'token_expire_in' => 7200
 ];

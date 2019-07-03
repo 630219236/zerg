@@ -94,12 +94,12 @@ class Order
     }
 
 
-
     /**
      * 生成订单快照
      * @param $status
+     * @return array
+     * @throws Exception
      * @throws UserException
-     * @throws \think\Exception
      */
     private function snapOrder($status) {
         $snap = [
@@ -136,6 +136,25 @@ class Order
             ]);
         }
         return $userAddress->toArray();
+    }
+
+
+    /**
+     * 对外进行库存量验证
+     * @param $orderID
+     * @return array
+     * @throws OrderException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function checkOrderStock($orderID) {
+        $oProducts = OrderProduct::where('order_id', '=', $orderID)->select();
+        $this->oProducts = $oProducts;
+
+        $this->products = $this->getProductsByOrder($oProducts);
+        $status =  $this->getOrderStatus();
+        return $status;
     }
 
     /**

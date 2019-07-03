@@ -78,4 +78,16 @@ class Token
             throw new TokenException();
         }
     }
+
+
+    public static function isValidOperate($checkedUID) {
+        if(!$checkedUID) {
+            throw new Exception('检测的UID不能为空');
+        }
+        $currentUID = self::getCurrentUid();
+        if($currentUID == $checkedUID) {
+            return true;
+        }
+        return false;
+    }
 }
