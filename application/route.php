@@ -26,7 +26,11 @@ Route::group('api/:version/product', function () {
 
 Route::get('api/:version/category/all', 'api/:version.Category/getCategories');
 
-Route::post('api/:version/token/user', 'api/:version.User/getToken');
+
+Route::group('api/:version/token', function () {
+    Route::post('/user', 'api/:version.Token/getToken');
+    Route::post('/verify', 'api/:version.Token/verifyToken');
+});
 
 Route::post('api/:version/address', 'api/:version.Address/createOrUpdateAddress');
 
